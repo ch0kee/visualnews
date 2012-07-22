@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene>
+  <Layout BackgroundImage="media/earth.jpg" X="0" Y="0" Width="640" Height="480">
+    <Window Name="news" X="30" Y="10" Width="580" Height="420" Border="1" ZLevel="0.1">
+      <Content Type="html" Name="googlePage" Url="media/google.html" />
+      <Content Type="image" Name="flBotImage" Url="media/fl_bot.jpg" />
+    </Window>
+    <Window Name="banner" X="10" Y="440" Width="620" Height="30" Border="1" ZLevel="0.1">
+      <Content Type="text" Name="text" Url="media/text.txt" />
+    </Window>
+  </Layout>
+  <Events>
+    <Thread>
+      <Run Member="show" Window="news" />
+
+      <Run Member="milestone" Id="@news" />
+      <Run Member="fadein" Content="googlePage" Window="news" />
+      <Run Member="wait" Interval="15000" />
+      <Run Member="fadeout" Content="googlePage" Window="news" />
+
+      <Run Member="fadein" Content="flBotImage" Window="news" />
+      <Run Member="wait" Interval="15000" />
+      <Run Member="fadeout" Content="flBotImage" Window="news" />
+
+      <Run Member="goto" Address="@news" />
+    </Thread>
+
+    <Thread>
+      <Run Member="show" Window="banner" />
+      <Run Member="show" Content="text" Window="banner" />
+      <Run Member="milestone" Id="@banner" />
+      <Run Member="scroll" Content="text" Window="banner" />      
+      <Run Member="goto" Address="@banner" />
+    </Thread>
+    <Thread>
+      <Run Member="milestone" Id="@fade" />
+      <Run Member="fadein" Content="text" Window="banner" />
+      <Run Member="fadeout" Content="text" Window="banner" />
+      <Run Member="goto" Address="@fade" />
+    </Thread>
+  </Events>
+</Scene>
+

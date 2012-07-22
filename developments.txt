@@ -1,0 +1,20 @@
+
+
+[ ] - scene felszabadítása csere esetén memóriaszivárgás nélkül
+    [ ] - QObject parentrendszer beállítása
+[x] - új, xml alapú parser
+
+[ ] - TextContent-ben a szövegméret ne konstans legyen, hanem automatikus
+    Ehelyett távoli képernyőt kérhetünk az alkalmazásra
+[ ] - kiskálázáskor jobbra tűnjön el az ablak, ne balra, mint most
+[ ] - WindowBorder, mint QGraphicsItem ahelyett, hogy
+      4 db QGraphicsLineItem-ből van összetákolva, mint most.
+[ ] - netes frissítés funkció
+    [x] - kapcsolat felépítése és lebontása
+    [ ] - távoli eljárások
+        [ ] - netes update új szálon, hogy ne fagyassza be a gui-t updatekor
+        [ ] - újraindítás
+        [ ] - remote-view
+        [ ] - új session
+            - a session legyen egy FILENAME.vnp nevű tömörített fájl, ami
+              FILENAME.vnsession fájlt és egy FILENAME mappát tartalmaz az adatokkal.

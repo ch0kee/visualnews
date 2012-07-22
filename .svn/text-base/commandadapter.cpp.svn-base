@@ -1,0 +1,43 @@
+
+#include <QtNetwork>
+#include "commandadapter.h"
+#include <iostream>
+#include "exceptions.h"
+#include <QDataStream>
+#include <QDebug>
+
+CommandAdapter::CommandAdapter()
+  : _tcpServer(0)
+{
+  _tcpServer = new QTcpServer(this);
+  QObject::connect(_tcpServer, SIGNAL(newConnection()),
+                   this, SLOT(clientConnected()));
+
+  bool ok = _tcpServer->listen(QHostAddress::LocalHost, 12345);
+  if (!ok)
+    throw Exception<EET_NETWORKERROR>("can't start tcp server");
+//  LOG( "listening:" << (ok?"OK":"FAIL") );
+}
+
+CommandAdapter::~CommandAdapter()
+{
+
+
+}
+
+const int Timeout = 5 * 1000;
+void CommandAdapter::clientConnected()
+{
+  QTcpSocket* socket = _tcpServer->nextPendingConnection();
+
+  if (socket->waitForReadyRead(5000))
+  {
+    QByteArray bytes = socket->readAll();
+    qDebug() << "Read " << bytes.length() << " bytes";
+  }
+  else
+  {
+    qDebug() << "Nothing to read";
+  }
+  delete socket;
+}
