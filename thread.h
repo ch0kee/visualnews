@@ -8,63 +8,60 @@
 #include <QMap>
 #include <QThread>
 
-namespace vnews
+class MilestoneEvent;
+class Event;
+class Thread : public QObject, public IHasEvents
 {
-    class MilestoneEvent;
-    class Event;
-    class Thread : public QObject, public IHasEvents
-    {
-        Q_OBJECT
-    public:
-        Thread(QObject* parent);
-        ~Thread();
-        void addEvent( Event* e );
-        Event* createEvent(const QXmlAttributes& attributes);
-    public Q_SLOTS:
-        void start();
-    private:
-        std::vector<Event*> _events;
-        QMap<QString, MilestoneEvent*> milestones_;
-    };
+    Q_OBJECT
+public:
+    Thread(QObject* parent);
+    ~Thread();
+    void addEvent( Event* e );
+    Event* createEvent(const QXmlAttributes& attributes);
+public Q_SLOTS:
+    void start();
+private:
+    std::vector<Event*> _events;
+    QMap<QString, MilestoneEvent*> milestones_;
+};
 
-    class WaitEvent : public Event
-    {
-        Q_OBJECT
-    public:
-        WaitEvent(int interval);
-        ~WaitEvent();
+class WaitEvent : public Event
+{
+    Q_OBJECT
+public:
+    WaitEvent(int interval);
+    ~WaitEvent();
 
-    public Q_SLOTS:
-        void start();
-    private:
-        class WaitingThread : public QThread
-        {
-            int interval_;
-        public:
-            WaitingThread(int interval);
-            void run();
-        } _waitThread;
-    };
-
-    class MilestoneEvent : public Event
+public Q_SLOTS:
+    void start();
+private:
+    class WaitingThread : public QThread
     {
-        Q_OBJECT
+        int interval_;
     public:
-        MilestoneEvent();
-    public Q_SLOTS:
-        void start();
-    };
+        WaitingThread(int interval);
+        void run();
+    } _waitThread;
+};
 
-    class GotoEvent : public Event
-    {
-        Q_OBJECT
-    public:
-        GotoEvent(MilestoneEvent* target);
-    public Q_SLOTS:
-        void start();
-    private:
-        MilestoneEvent* target_;
-    };
-}
+class MilestoneEvent : public Event
+{
+    Q_OBJECT
+public:
+    MilestoneEvent();
+public Q_SLOTS:
+    void start();
+};
+
+class GotoEvent : public Event
+{
+    Q_OBJECT
+public:
+    GotoEvent(MilestoneEvent* target);
+public Q_SLOTS:
+    void start();
+private:
+    MilestoneEvent* target_;
+};
 
 #endif // THREAD_H

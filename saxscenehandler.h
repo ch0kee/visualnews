@@ -4,23 +4,20 @@
 #include <QXmlDefaultHandler>
 
 class Scene;
-namespace vnews
+class XmlParser;
+
+class SAXSceneHandler : public QXmlDefaultHandler
 {
-    class XmlParser;
+public:
+    SAXSceneHandler(Scene* s);
+    bool startElement(const QString &namespaceURI, const QString &localName,
+                      const QString &qName, const QXmlAttributes &attributes);
 
-    class SAXSceneHandler : public QXmlDefaultHandler
-    {
-    public:
-        SAXSceneHandler(Scene* s);
-        bool startElement(const QString &namespaceURI, const QString &localName,
-                          const QString &qName, const QXmlAttributes &attributes);
-
-        bool endElement(const QString &namespaceURI, const QString &localName,
-                        const QString &qName);
-    private:
-        Scene* scene_;
-        XmlParser* xmlParser_;
-    };
-}
+    bool endElement(const QString &namespaceURI, const QString &localName,
+                    const QString &qName);
+private:
+    Scene* scene_;
+    XmlParser* xmlParser_;
+};
 
 #endif // SAXSCENEHANDLER_H

@@ -4,15 +4,13 @@
 #include "ihasgraphicsitem.h"
 #include "ihasevents.h"
 
-namespace vnews
+class SceneObject : public IHasGraphicsItem
 {
-    class SceneObject : public IHasGraphicsItem, public IHasEvents
-    {
-    public:
-        SceneObject();
+public:
+    SceneObject();
+    virtual ~SceneObject() {};
 
-        virtual Event* createEvent(const QXmlAttributes& attributes);
-    };
-}
+    virtual Event* createEvent(const QXmlAttributes& attributes);
+};
 
 #endif // SCENEOBJECT_H

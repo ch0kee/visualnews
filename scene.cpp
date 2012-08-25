@@ -20,10 +20,9 @@
 #include "exceptions.h"
 #include "visualnewsapplication.h"
 
-using namespace vnews;
 
 Scene::Scene()
-    : QGraphicsScene(0), _threads(this), _layout(this), _cmdAdapter(*this)
+    : QGraphicsScene(0), _threads(this), _layout(this)
 {
   new UI::ProgramWidget(this);
 
@@ -36,7 +35,7 @@ void    Scene::setSession(const QString& sessionFilename)
     this->stop();
     fillScene(sessionFilename);
     this->start();
-    this->getMainView()->showFullScreen();
+    this->getMainView()->showNormal();
 }
 
 //QString filledFrom;
@@ -44,7 +43,7 @@ void Scene::fillScene(const QString &filename)
 {
   _lastFilename = filename;
   LOG( "filling scene");
-  vnews::SAXSceneHandler sceneHandler(this);
+  SAXSceneHandler sceneHandler(this);
   QXmlSimpleReader reader;
   reader.setContentHandler(&sceneHandler);
 

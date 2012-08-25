@@ -18,7 +18,6 @@
 #include <QApplication>
 #include <QEventLoop>
 using namespace std;
-using namespace vnews;
 
 
 
@@ -41,11 +40,8 @@ Content* Content::CreateContent(const QXmlAttributes& attrs, Scene& scene)
     }
     Q_ASSERT( c != 0 );
 
-    QString name = attrs.value("Name");
-    c->_name = name;
-
-    QString url = attrs.value("Url");
-    c->_url = url;
+    c->_name = attrs.value("Name");
+    c->_url = attrs.value("Url");
 
     return c;
 }
@@ -92,7 +88,7 @@ QGraphicsItem* HtmlContent::createGraphicsItem(const QRectF& rect)
     {
         _webPage->mainFrame()->load(QUrl(_url));
         qDebug() << "Executing load [" << _url << "]...";
-        QApplication::processEvents( QEventLoop::AllEvents, 30);
+        QApplication::processEvents( QEventLoop::AllEvents, 80);
         qDebug() << "DONE Executed.";
     }
 

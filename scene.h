@@ -5,7 +5,6 @@
 #include "scenelayouthandler.h"
 #include "sceneeventshandler.h"
 #include <QString>
-#include "commandadapter.h"
 
 #include <vector>
 class QTimeLine;
@@ -22,23 +21,23 @@ public:
 
   void keyPressEvent ( QKeyEvent * keyEvent );
 
-  vnews::SceneEventsHandler& threads() { return _threads; }
-  vnews::SceneLayoutHandler& layout() { return _layout; }
+  SceneEventsHandler& threads() { return _threads; }
+  SceneLayoutHandler& layout() { return _layout; }
 
   QGraphicsView* getMainView() const { return this->views().first(); }
 
   void start();
   void stop();
 
+
   void  setSession(const QString& sessionFilename);
 signals:
   void started();
 private:
-  vnews::SceneEventsHandler _threads;
-  vnews::SceneLayoutHandler _layout;
+  SceneEventsHandler _threads;
+  SceneLayoutHandler _layout;
 
   QString _lastFilename;
-  CommandAdapter _cmdAdapter;
 
 };
 

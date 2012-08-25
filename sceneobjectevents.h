@@ -5,8 +5,6 @@
 #include <QGraphicsItemAnimation>
 
 class QTimeLine;
-namespace vnews
-{
     class IHasGraphicsItem;
 
     namespace Events
@@ -90,5 +88,4 @@ namespace vnews
         };
 
     }
-}
 #endif // SCENEOBJECTEVENTS_H

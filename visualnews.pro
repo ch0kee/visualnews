@@ -23,17 +23,13 @@ SOURCES += \
     scene.cpp \
     saxscenehandler.cpp \
     xmlparser.cpp \
-    xmleventsparser.cpp \
-    xmllayoutparser.cpp \
     thread.cpp \
     event.cpp \
     sceneobject.cpp \
     sceneobjectevents.cpp \
     scenelayouthandler.cpp \
     sceneeventshandler.cpp \
-    scenetcpserver.cpp \
-    commandadapter.cpp \
-    visualnewsapplication.cpp
+    engine.cpp
 
 HEADERS  += \
     window.h \
@@ -43,8 +39,6 @@ HEADERS  += \
     scene.h \
     saxscenehandler.h \
     xmlparser.h \
-    xmleventsparser.h \
-    xmllayoutparser.h \
     thread.h \
     event.h \
     ihasgraphicsitem.h \
@@ -53,10 +47,8 @@ HEADERS  += \
     sceneobjectevents.h \
     scenelayouthandler.h \
     sceneeventshandler.h \
-    scenetcpserver.h \
     exceptions.h \
-    commandadapter.h \
-    visualnewsapplication.h
+    engine.h
 
 OTHER_FILES += \
     developments.txt \

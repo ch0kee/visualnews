@@ -5,7 +5,7 @@
 
 const int FADE_DURATION = 1000;
 
-using namespace vnews::Events;
+using namespace Events;
 
 ShowSceneObject::ShowSceneObject(IHasGraphicsItem* sceneObject)
     : Event(0), sceneObject_(sceneObject)

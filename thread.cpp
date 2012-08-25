@@ -1,13 +1,14 @@
 #include "thread.h"
 #include "event.h"
 #include <QXmlAttributes>
+#include <QDebug>
 
-vnews::Thread::Thread(QObject* parent)
+Thread::Thread(QObject* parent)
     : QObject(parent)
 {
 }
 
-vnews::Thread::~Thread()
+Thread::~Thread()
 {
     // események törlése
     Q_FOREACH(Event* e, _events)
@@ -17,7 +18,7 @@ vnews::Thread::~Thread()
     _events.clear();
 }
 
-void vnews::Thread::addEvent( vnews::Event* e )
+void Thread::addEvent( Event* e )
 {
     Q_ASSERT(e != 0);
 
@@ -30,7 +31,7 @@ void vnews::Thread::addEvent( vnews::Event* e )
 }
 
 
-vnews::Event* vnews::Thread::createEvent(const QXmlAttributes& attributes)
+Event* Thread::createEvent(const QXmlAttributes& attributes)
 {
     QString function = attributes.value("Member");
     if (function == "milestone")
@@ -60,13 +61,14 @@ vnews::Event* vnews::Thread::createEvent(const QXmlAttributes& attributes)
     }
     else
     {
+        qDebug() << function << "?";
         Q_ASSERT( !"Unknown thread event" );
         return 0;
     }
 
 }
 
-void vnews::Thread::start()
+void Thread::start()
 {
     if (!_events.empty())
         _events.front()->start();
@@ -76,32 +78,32 @@ void vnews::Thread::start()
 // WaitEvent
 ///////////////////////////////////////////////
 
-vnews::WaitEvent::WaitEvent(int interval)
+WaitEvent::WaitEvent(int interval)
     : Event(0), _waitThread(interval)
 {
     QObject::connect(&_waitThread, SIGNAL(finished()),
                      this, SIGNAL(finished()));
 }
 
-vnews::WaitEvent::~WaitEvent()
+WaitEvent::~WaitEvent()
 {
     _waitThread.terminate();
     _waitThread.wait();
 }
 
-void vnews::WaitEvent::start()
+void WaitEvent::start()
 {
     _waitThread.start();
 }
 
 
-vnews::WaitEvent::WaitingThread::WaitingThread(int interval)
+WaitEvent::WaitingThread::WaitingThread(int interval)
     : interval_(interval)
 {
 }
 
 
-void vnews::WaitEvent::WaitingThread::run()
+void WaitEvent::WaitingThread::run()
 {
     msleep(interval_);
 }
@@ -109,13 +111,13 @@ void vnews::WaitEvent::WaitingThread::run()
 ///////////////////////////////////////////////
 // MilestoneEvent
 ///////////////////////////////////////////////
-vnews::MilestoneEvent::MilestoneEvent()
+MilestoneEvent::MilestoneEvent()
     : Event(0)
 {
 
 }
 
-void vnews::MilestoneEvent::start()
+void MilestoneEvent::start()
 {
     Q_EMIT finished();
 }
@@ -123,13 +125,13 @@ void vnews::MilestoneEvent::start()
 ///////////////////////////////////////////////
 // GotoEvent
 ///////////////////////////////////////////////
-vnews::GotoEvent::GotoEvent(MilestoneEvent* target)
+GotoEvent::GotoEvent(MilestoneEvent* target)
     : Event(0), target_(target)
 {
 
 }
 
-void vnews::GotoEvent::start()
+void GotoEvent::start()
 {
     target_->start();
 }

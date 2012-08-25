@@ -1,13 +1,14 @@
 #include "scenelayouthandler.h"
 #include "window.h"
+#include "content.h"
 #include "scene.h"
 
-vnews::SceneLayoutHandler::SceneLayoutHandler(Scene* s)
+SceneLayoutHandler::SceneLayoutHandler(Scene* s)
     : _scene(s)
 {
 }
 
-void    vnews::SceneLayoutHandler::clear()
+void    SceneLayoutHandler::clear()
 {
     Q_FOREACH(Window* w, layoutWindows_)
     {
@@ -16,7 +17,7 @@ void    vnews::SceneLayoutHandler::clear()
     layoutWindows_.clear();
 }
 
-vnews::Window* vnews::SceneLayoutHandler::windowByName(const QString& name)
+Window* SceneLayoutHandler::windowByName(const QString& name)
 {
     for(size_t i = 0; i < layoutWindows_.size(); ++i)
     {
@@ -26,9 +27,35 @@ vnews::Window* vnews::SceneLayoutHandler::windowByName(const QString& name)
     return 0;
 }
 
-void vnews::SceneLayoutHandler::addWindow(Window* window)
+Content *SceneLayoutHandler::contentByName(const QString& name)
+{
+    for(size_t i = 0; i < layoutWindows_.size(); ++i)
+    {
+        Content *c = layoutWindows_[i]->contentByName(name);
+        if (c)
+            return c;
+    }
+    return 0;
+}
+
+void SceneLayoutHandler::addWindow(Window* window)
 {
     layoutWindows_.push_back(window);
     _scene->addItem( window->graphicsItem() );
     window->graphicsItem()->setVisible(true);
+}
+
+SceneObject *SceneLayoutHandler::sceneObjectByName(const QString &name)
+{
+    for(size_t i = 0; i < layoutWindows_.size(); ++i)
+    {
+        if (layoutWindows_[i]->name() == name)
+            return layoutWindows_[i];
+        else
+        {
+            if (Content *c = layoutWindows_[i]->contentByName(name))
+                return c;
+        }
+    }
+    return 0;
 }

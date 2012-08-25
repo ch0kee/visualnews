@@ -10,7 +10,7 @@ enum eExceptionType { EET_IOERROR, EET_PARSEERROR, EET_NETWORKERROR };
 class IException
 {
 public:
-  virtual void print() = 0;
+  virtual QString  message() = 0;
 };
 
 template<eExceptionType ExceptionType_>
@@ -25,15 +25,11 @@ public:
 
 
 
-  virtual void  print()
+  QString  message()
   {
-    endl(QTextStream(stdout) << "!! " << exceptionCategory() << " :: " << _msg);
+      return exceptionCategory() + " :: " + _msg;
   }
 
-  /*virtual const char* what() const
-  {
-    return _msg.data();
-  }*/
 private:
 
   QString exceptionCategory()

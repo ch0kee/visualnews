@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Scene>
+<Session>
   <Layout BackgroundImage="media/earth.jpg" X="0" Y="0" Width="1024" Height="768">
     <Window Name="news" X="30" Y="10" Width="964" Height="700" Border="1" ZLevel="0.1">
       <Content Type="html" Name="testRelPage" Url="media/test_relative.html" />
@@ -10,39 +10,39 @@
       <Content Type="text" Name="text" Url="media/text.txt" />
     </Window>
   </Layout>
-  <Events>
+  <Behavior>
     <Thread>
-      <Run Member="show" Window="news" />
+      <Run Member="show" Target="news" />
       <Run Member="milestone" Id="@news" />
 
-      <Run Member="fadein" Content="testRelPage" Window="news" />
+      <Run Member="fadein" Target="testRelPage" />
       <Run Member="wait" Interval="5000" />
-      <Run Member="fadeout" Content="testRelPage" Window="news" />
+      <Run Member="fadeout" Target="testRelPage" />
 
-      <Run Member="fadein" Content="testAbsPage" Window="news" />
+      <Run Member="fadein" Target="testAbsPage" />
       <Run Member="wait" Interval="5000" />
-      <Run Member="fadeout" Content="testAbsPage" Window="news" />
+      <Run Member="fadeout" Target="testAbsPage" />
 
-      <Run Member="fadein" Content="flBotImage" Window="news" />
+      <Run Member="fadein" Target="flBotImage" />
       <Run Member="wait" Interval="15000" />
-      <Run Member="fadeout" Content="flBotImage" Window="news" />
+      <Run Member="fadeout" Target="flBotImage" />
 
       <Run Member="goto" Address="@news" />
     </Thread>
 
     <Thread>
-      <Run Member="show" Window="banner" />
-      <Run Member="show" Content="text" Window="banner" />
+      <Run Member="show" Target="banner" />
+      <Run Member="show" Target="text" />
       <Run Member="milestone" Id="@banner" />
-      <Run Member="scroll" Content="text" Window="banner" />      
+      <Run Member="scroll" Target="text" />
       <Run Member="goto" Address="@banner" />
     </Thread>
     <Thread>
       <Run Member="milestone" Id="@fade" />
-      <Run Member="fadein" Content="text" Window="banner" />
-      <Run Member="fadeout" Content="text" Window="banner" />
+      <Run Member="fadein" Target="text" />
+      <Run Member="fadeout" Target="text" />
       <Run Member="goto" Address="@fade" />
     </Thread>
-  </Events>
-</Scene>
+  </Behavior>
+</Session>
 

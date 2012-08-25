@@ -4,9 +4,9 @@
 #include <QString>
 
 class Scene;
-namespace vnews
-{
+    class SceneObject;
     class Window;
+    class Content;
     class SceneLayoutHandler
     {
     public:
@@ -14,13 +14,16 @@ namespace vnews
 
         void addWindow(Window* window);
 
+        SceneObject* sceneObjectByName(const QString& name);
+
         Window* windowByName(const QString& name);
+        Content* contentByName(const QString& name);
         void    clear();
+
+        Window* lastWindow() { return layoutWindows_.back(); }
 
     private:
         Scene*  _scene;
         std::vector<Window*> layoutWindows_;
     };
-}
-
 #endif // SCENELAYOUTHANDLER_H

@@ -8,37 +8,32 @@
 #include <QStringList>
 #include <algorithm>
 #include "exceptions.h"
-#include "visualnewsapplication.h"
-bool isLayoutGiven(int argc);
-int printUsage(const char* progname);
 
+_Log logger;
 
+bool isLayoutGiven(int argc, char** argv)
+{
+    return argc >= 2 && QFile::exists(argv[1]);
+}
+//./vnews [layout-file] [konstansok]
 int main(int argc, char** argv)
 {
-  if (!isLayoutGiven(argc))
-    return printUsage(argv[0]);
+    if (!isLayoutGiven(argc, argv))
+        return 1;
+    QApplication app(argc, argv);
+    QApplication::setOverrideCursor(Qt::BlankCursor);
 
-  VisualNewsApplication vnapp(argc, argv);
+    Scene       scene;
 
-  int ret = 1;
-  try
-  {
-    ret = vnapp.run();
-  }
-  catch(IException& ex)
-  {
-    ex.print();
-    return 1;
-  }
-
-  return ret;
+    int ret = 1;
+    try {
+        scene.setSession(argv[1]);
+        ret = app.exec();
+    }
+    catch(IException& ex) {
+        logger << ex.message().toStdString();
+        ret = 1;
+    }
+    return ret;
 }
 
-bool isLayoutGiven(int argc) { return argc >= 2; }
-
-int printUsage(const char* progname)
-{
-  std::cout << "-. missing parameters" << std::endl;
-  std::cout << "-. usage: " << progname << " LAYOUT-FILE [PARAMÉTEREK]" << std::endl;
-  return 1;
-}

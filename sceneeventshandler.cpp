@@ -2,7 +2,6 @@
 #include "scene.h"
 #include "thread.h"
 
-using namespace vnews;
 
 SceneEventsHandler::SceneEventsHandler(Scene* s)
     : _scene(s)
@@ -32,4 +31,9 @@ void SceneEventsHandler::clear()
         delete t;
     }
     _threads.clear();
+}
+
+Thread *SceneEventsHandler::last()
+{
+    return _threads.back();
 }

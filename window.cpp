@@ -10,7 +10,6 @@
 
 const float BORDER = 3.f;
 
-using namespace vnews;
 
 Window::Window(const QString& name)
     : _name(name)
@@ -29,7 +28,7 @@ Window::~Window()
   }
 }
 
-Content* Window::contentByName(QString name)
+Content* Window::contentByName(const QString& name)
 {
   for(size_t i = 0; i < contents_.size(); ++i)
   {

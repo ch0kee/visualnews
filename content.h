@@ -17,59 +17,54 @@
 
 class Scene;
 class QWebPage;
-namespace vnews
+class Content : public SceneObject
 {
-    class Content : public SceneObject
-    {
-    public:
+public:
 
-        virtual ~Content();
-        static Content* CreateContent(const QXmlAttributes& attrs, Scene& scene);
+    virtual ~Content();
+    static Content* CreateContent(const QXmlAttributes& attrs, Scene& scene);
 
-        QGraphicsItem* graphicsItem() const{ return graphicsItem_; }
+    QGraphicsItem* graphicsItem() const{ return graphicsItem_; }
 
-        void    preload(Window* window);
-        const QString& name() const { return _name; }
-    protected:
-        Content();
+    void    preload(Window* window);
+    const QString& name() const { return _name; }
+protected:
+    Content();
 
-        virtual QGraphicsItem* createGraphicsItem(const QRectF& rect) = 0;
-        QString _url;
+    virtual QGraphicsItem* createGraphicsItem(const QRectF& rect) = 0;
+    QString _url;
 
-        QGraphicsItem* graphicsItem_;
-            private:
-        QString _name;
-    };
+    QGraphicsItem* graphicsItem_;
+        private:
+    QString _name;
+};
 
 
-    class HtmlContent : public QObject, public Content
-    {
-        Q_OBJECT
-    public:
-        HtmlContent(Scene& scene);
-    protected:
-        QGraphicsItem* createGraphicsItem(const QRectF& rect);
+class HtmlContent : public QObject, public Content
+{
+    Q_OBJECT
+public:
+    HtmlContent(Scene& scene);
+protected:
+    QGraphicsItem* createGraphicsItem(const QRectF& rect);
 
 
 private:
-        Scene& _scene;
-        QWebPage* _webPage;
-    };
+    Scene& _scene;
+    QWebPage* _webPage;
+};
 
-    class ImageContent : public Content
-    {
-    protected:
-        QGraphicsItem* createGraphicsItem(const QRectF& rect);
-    };
+class ImageContent : public Content
+{
+protected:
+    QGraphicsItem* createGraphicsItem(const QRectF& rect);
+};
 
-    class TextContent : public Content
-    {
-    protected:
-        QGraphicsItem* createGraphicsItem(const QRectF& rect);
-    };
-
-
-}
+class TextContent : public Content
+{
+protected:
+    QGraphicsItem* createGraphicsItem(const QRectF& rect);
+};
 
 
 

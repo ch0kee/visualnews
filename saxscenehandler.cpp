@@ -3,10 +3,7 @@
 #include "scene.h"
 #include "window.h"
 #include "content.h"
-#include "xmllayoutparser.h"
-#include "xmleventsparser.h"
-
-using namespace vnews;
+#include "xmlparser.h"
 
 SAXSceneHandler::SAXSceneHandler(Scene* s)
     : scene_(s), xmlParser_(0)
@@ -25,7 +22,7 @@ bool SAXSceneHandler::startElement(const QString &namespaceURI,
   {
     return xmlParser_->startElement(qName, attributes);
   }
-  else if (qName == "Scene")
+  else if (qName == "Session")
   //@ <SCENE>
   {
     Q_ASSERT( scene_ != 0 );
@@ -50,7 +47,7 @@ bool SAXSceneHandler::startElement(const QString &namespaceURI,
                  attributes.value("Height").toDouble());
     scene_->setSceneRect(sgeom);
   }
-  else if (qName == "Events")
+  else if (qName == "Behavior")
   //@ <EVENTS>
   {
     Q_ASSERT( xmlParser_ == 0 );
@@ -79,7 +76,7 @@ bool SAXSceneHandler::endElement(const QString &namespaceURI,
       delete xmlParser_;
       xmlParser_ = 0;
     }
-    else if (qName == "Events")
+    else if (qName == "Behavior")
     //@ </EVENTS>
     {
       delete xmlParser_;
@@ -90,7 +87,7 @@ bool SAXSceneHandler::endElement(const QString &namespaceURI,
       return xmlParser_->endElement(qName);
     }
   }
-  else if (qName == "Scene")
+  else if (qName == "Session")
   //@ </SCENE>
   {
       //GYŐZELEM ?
