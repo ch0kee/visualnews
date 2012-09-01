@@ -12,7 +12,7 @@ class Scene;
     public:
         SceneLayoutHandler(Scene* s);
 
-        void addWindow(Window* window);
+        //void addWindow(Window* window);
 
         SceneObject* sceneObjectByName(const QString& name);
 

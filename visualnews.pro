@@ -21,14 +21,14 @@ SOURCES += \
     main.cpp \
     content.cpp \
     scene.cpp \
-    saxscenehandler.cpp \
-    xmlparser.cpp \
     thread.cpp \
     event.cpp \
     sceneobject.cpp \
     sceneobjectevents.cpp \
     scenelayouthandler.cpp \
     sceneeventshandler.cpp \
+    xmlsessionhandler.cpp \
+    session.cpp \
     engine.cpp
 
 HEADERS  += \
@@ -37,17 +37,16 @@ HEADERS  += \
     content.h \
     logger.h \
     scene.h \
-    saxscenehandler.h \
-    xmlparser.h \
     thread.h \
     event.h \
     ihasgraphicsitem.h \
-    ihasevents.h \
     sceneobject.h \
     sceneobjectevents.h \
     scenelayouthandler.h \
     sceneeventshandler.h \
     exceptions.h \
+    xmlsessionhandler.h \
+    session.h \
     engine.h
 
 OTHER_FILES += \

@@ -6,28 +6,27 @@ SceneObject::SceneObject()
 {
 }
 
-Event* SceneObject::createEvent(const QXmlAttributes& attributes)
+Event* SceneObject::createEvent(const QString& name)
 {
     Event* event = 0;
 
-    QString member = attributes.value("Member");
-    if (member == "fadein")
+    if (name == "fadein")
     {
         event = new Events::FadeInSceneObject(this);
     }
-    else if (member == "fadeout")
+    else if (name == "fadeout")
     {
         event = new Events::FadeOutSceneObject(this);
     }
-    else if (member == "show")
+    else if (name == "show")
     {
         event = new Events::ShowSceneObject(this);
     }
-    else if (member == "hide")
+    else if (name == "hide")
     {
         event = new Events::HideSceneObject(this);
     }
-    else if (member == "scroll")
+    else if (name == "scroll")
     {
         event = new Events::ScrollSceneObject(this);
     }

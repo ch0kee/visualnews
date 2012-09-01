@@ -8,6 +8,10 @@
 #include <QStringList>
 #include <algorithm>
 #include "exceptions.h"
+#include "programwidget.h"
+#include "session.h"
+#include "engine.h"
+
 
 _Log logger;
 
@@ -20,20 +24,25 @@ int main(int argc, char** argv)
 {
     if (!isLayoutGiven(argc, argv))
         return 1;
+
     QApplication app(argc, argv);
     QApplication::setOverrideCursor(Qt::BlankCursor);
 
-    Scene       scene;
+    Session session;
+    Session::ReadFromXml(session, argv[1]);
 
-    int ret = 1;
-    try {
-        scene.setSession(argv[1]);
-        ret = app.exec();
-    }
-    catch(IException& ex) {
-        logger << ex.message().toStdString();
-        ret = 1;
-    }
-    return ret;
+    QGraphicsScene      scene;
+    UI::ProgramWidget   view (&scene);
+    ViewKeyboardFilter  filter(&view);
+
+    Engine  engine;
+    engine.setSession(&session);
+    engine.setScene(&scene);
+    engine.fillScene();
+
+    engine.startAnimation();
+    view.showNormal();
+
+    return app.exec();
 }
 

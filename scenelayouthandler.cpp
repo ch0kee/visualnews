@@ -38,12 +38,14 @@ Content *SceneLayoutHandler::contentByName(const QString& name)
     return 0;
 }
 
+#if 0
 void SceneLayoutHandler::addWindow(Window* window)
 {
     layoutWindows_.push_back(window);
     _scene->addItem( window->graphicsItem() );
     window->graphicsItem()->setVisible(true);
 }
+#endif
 
 SceneObject *SceneLayoutHandler::sceneObjectByName(const QString &name)
 {

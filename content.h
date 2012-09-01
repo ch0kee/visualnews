@@ -22,7 +22,7 @@ class Content : public SceneObject
 public:
 
     virtual ~Content();
-    static Content* CreateContent(const QXmlAttributes& attrs, Scene& scene);
+    static Content* CreateContent(const QString &id, const QString &type, const QString &url);
 
     QGraphicsItem* graphicsItem() const{ return graphicsItem_; }
 
@@ -44,13 +44,12 @@ class HtmlContent : public QObject, public Content
 {
     Q_OBJECT
 public:
-    HtmlContent(Scene& scene);
+    HtmlContent();
 protected:
     QGraphicsItem* createGraphicsItem(const QRectF& rect);
 
 
 private:
-    Scene& _scene;
     QWebPage* _webPage;
 };
 

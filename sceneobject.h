@@ -2,15 +2,16 @@
 #define SCENEOBJECT_H
 
 #include "ihasgraphicsitem.h"
-#include "ihasevents.h"
 
+class QString;
+class Event;
 class SceneObject : public IHasGraphicsItem
 {
 public:
     SceneObject();
     virtual ~SceneObject() {};
 
-    virtual Event* createEvent(const QXmlAttributes& attributes);
+    Event* createEvent(const QString &name);
 };
 
 #endif // SCENEOBJECT_H

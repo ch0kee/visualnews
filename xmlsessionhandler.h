@@ -5,19 +5,19 @@
 
 class Scene;
 class XmlParser;
-
-class SAXSceneHandler : public QXmlDefaultHandler
+class Session;
+class XmlSessionHandler : public QXmlDefaultHandler
 {
 public:
-    SAXSceneHandler(Scene* s);
+    XmlSessionHandler(Session* s)
+        : _session(s) {}
     bool startElement(const QString &namespaceURI, const QString &localName,
                       const QString &qName, const QXmlAttributes &attributes);
 
     bool endElement(const QString &namespaceURI, const QString &localName,
                     const QString &qName);
 private:
-    Scene* scene_;
-    XmlParser* xmlParser_;
+    Session* _session;
 };
 
 #endif // SAXSCENEHANDLER_H

@@ -3,21 +3,22 @@
 
 #include <vector>
 #include <QObject>
-#include "ihasevents.h"
 #include "event.h"
 #include <QMap>
 #include <QThread>
+#include <QVariant>
+#include <QTimer>
 
 class MilestoneEvent;
 class Event;
-class Thread : public QObject, public IHasEvents
+class Thread : public QObject
 {
     Q_OBJECT
 public:
-    Thread(QObject* parent);
+    Thread(QObject* parent=0);
     ~Thread();
     void addEvent( Event* e );
-    Event* createEvent(const QXmlAttributes& attributes);
+    Event* createEvent(const QString& name, const QString &param);
 public Q_SLOTS:
     void start();
 private:
@@ -35,13 +36,8 @@ public:
 public Q_SLOTS:
     void start();
 private:
-    class WaitingThread : public QThread
-    {
-        int interval_;
-    public:
-        WaitingThread(int interval);
-        void run();
-    } _waitThread;
+    QTimer timer;
+    int _interval;
 };
 
 class MilestoneEvent : public Event

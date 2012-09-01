@@ -9,7 +9,7 @@ namespace UI
     {
         Q_OBJECT
     public:
-        ProgramWidget(QGraphicsScene* scene);
+        ProgramWidget(QGraphicsScene* scene , QWidget* parent=0);
     protected:
         void resizeEvent(QResizeEvent *event);
     };

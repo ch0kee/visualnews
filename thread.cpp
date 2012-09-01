@@ -30,38 +30,27 @@ void Thread::addEvent( Event* e )
     _events.push_back( e );
 }
 
-
-Event* Thread::createEvent(const QXmlAttributes& attributes)
+Event* Thread::createEvent(const QString &name, const QString &param)
 {
-    QString function = attributes.value("Member");
-    if (function == "milestone")
+    if (name == "milestone")
     {
-        Q_ASSERT( attributes.count() == 2 );
-        Q_ASSERT( attributes.index("Member") != -1 );
-        Q_ASSERT( attributes.index("Id") != -1 );
 
-        return milestones_[ attributes.value("Id") ] = new MilestoneEvent();
+        return milestones_[ param ] = new MilestoneEvent();
     }
-    else if (function == "wait")
+    else if (name == "wait")
     {
-        Q_ASSERT( attributes.count() == 2 );
-        Q_ASSERT( attributes.index("Member") != -1 );
-        Q_ASSERT( attributes.index("Interval") != -1 );
 
-        return new WaitEvent( attributes.value("Interval").toInt() );
+        return new WaitEvent( param.toInt() );
     }
-    else if (function == "goto")
+    else if (name == "goto")
     {
-        Q_ASSERT( attributes.count() == 2 );
-        Q_ASSERT( attributes.index("Member") != -1 );
-        Q_ASSERT( attributes.index("Address") != -1 );
 
-        Q_ASSERT( milestones_.contains(attributes.value("Address")) );
-        return new GotoEvent( milestones_[attributes.value("Address")] );
+        Q_ASSERT( milestones_.contains(param) );
+        return new GotoEvent( milestones_[param] );
     }
     else
     {
-        qDebug() << function << "?";
+        qDebug() << name << "?";
         Q_ASSERT( !"Unknown thread event" );
         return 0;
     }
@@ -79,34 +68,22 @@ void Thread::start()
 ///////////////////////////////////////////////
 
 WaitEvent::WaitEvent(int interval)
-    : Event(0), _waitThread(interval)
+    : Event(0), _interval(interval)
 {
-    QObject::connect(&_waitThread, SIGNAL(finished()),
-                     this, SIGNAL(finished()));
+    timer.setSingleShot(true);
+    connect(&timer, SIGNAL(timeout()), this, SIGNAL(finished()));
 }
 
 WaitEvent::~WaitEvent()
 {
-    _waitThread.terminate();
-    _waitThread.wait();
+    timer.stop();
 }
 
 void WaitEvent::start()
 {
-    _waitThread.start();
+    timer.start(_interval);
 }
 
-
-WaitEvent::WaitingThread::WaitingThread(int interval)
-    : interval_(interval)
-{
-}
-
-
-void WaitEvent::WaitingThread::run()
-{
-    msleep(interval_);
-}
 
 ///////////////////////////////////////////////
 // MilestoneEvent

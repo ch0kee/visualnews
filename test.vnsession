@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session>
-  <Layout BackgroundImage="media/earth.jpg" X="0" Y="0" Width="1024" Height="768">
+  <Layout BackgroundImage="media/earth.jpg" Width="1024" Height="768">
     <Window Name="news" X="30" Y="10" Width="964" Height="700" Border="1" ZLevel="0.1">
       <Content Type="html" Name="testRelPage" Url="media/test_relative.html" />
       <Content Type="html" Name="testAbsPage" Url="media/test_absolute.html" />

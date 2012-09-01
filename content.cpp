@@ -21,14 +21,13 @@ using namespace std;
 
 
 
-Content* Content::CreateContent(const QXmlAttributes& attrs, Scene& scene)
+Content* Content::CreateContent(const QString& id, const QString& type, const QString& url)
 {
-    QString type = attrs.value("Type");
     Content* c = 0;
     //@ Content Type
     if (type == "html")
     {
-        c = new HtmlContent(scene);
+        c = new HtmlContent();
     }
     else if (type == "image")
     {
@@ -40,8 +39,8 @@ Content* Content::CreateContent(const QXmlAttributes& attrs, Scene& scene)
     }
     Q_ASSERT( c != 0 );
 
-    c->_name = attrs.value("Name");
-    c->_url = attrs.value("Url");
+    c->_name = id;
+    c->_url = url;
 
     return c;
 }
@@ -67,8 +66,8 @@ void Content::preload(Window* window)
     window->addContent(this);
 }
 
-HtmlContent::HtmlContent(Scene &scene)
-    : _scene(scene), _webPage(nullptr)
+HtmlContent::HtmlContent()
+    : _webPage(nullptr)
 {
 }
 

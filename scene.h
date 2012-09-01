@@ -9,17 +9,33 @@
 #include <vector>
 class QTimeLine;
 class Tokens;
-
+class QGraphicsView;
 class Thread;
+
+class ViewKeyboardFilter
+        : public QObject
+{
+    Q_OBJECT
+public:
+    ViewKeyboardFilter(QGraphicsView* view);
+
+    bool eventFilter(QObject *obj, QEvent *ev);
+private:
+    QGraphicsView* _view;
+
+};
+
 class Scene : public QGraphicsScene
 {
   Q_OBJECT
 public:
   Scene();
 
+  void setView( QGraphicsView* view);
+
   void fillScene(const QString& filename);
 
-  void keyPressEvent ( QKeyEvent * keyEvent );
+  //void keyPressEvent ( QKeyEvent * keyEvent );
 
   SceneEventsHandler& threads() { return _threads; }
   SceneLayoutHandler& layout() { return _layout; }
